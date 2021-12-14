@@ -23,29 +23,35 @@ export default function buttons() {
 
     0,
   ];
-  let operators = ["/", "*", "-", "+"];
-  let changers = ["AC", "+/-", "%", "."];
+  let operators = ["/", "*", "-", "+", "."];
+  let changers = ["AC"];
 
   const [number, setNumber] = useState("");
   const [op, setop] = useState("");
   const [change, setchange] = useState("");
   const [equation, setEquation] = useState("");
 
-  const changeValue = (change) => {};
+  const changeValue = (change) => {
+    if (change == "AC") {
+      setEquation("");
+    } else if (
+      change == "+/-" &&
+      numbers.includes(Number(equation.slice(-1)))
+    ) {
+      setEquation((equation * -1).toString());
+    } else if (change == "%" && numbers.includes(Number(equation.slice(-1)))) {
+        setEquation((equation * 0.01).toString())
+    }
+  };
 
   const chooseNum = (num) => {
-    // for(let i =0;i<operators.length; i++) {
-    //     if(equation[equation.length-1] == operators[i]) {
-    //         return
-    //     }
-    // }
     if (
       (operators.includes(num) && equation == "") ||
       (operators.includes(num) && operators.includes(equation.slice(-1)))
-    ) {return
+    ) {
+      return;
     }
     setEquation(equation + num);
-    console.log(equation[equation.length - 1]);
   };
 
   const chooseOp = (op) => {
@@ -53,7 +59,7 @@ export default function buttons() {
   };
 
   const calculate = () => {
-    setEquation(eval(equation));
+    setEquation(eval(equation).toString());
   };
 
   return (
