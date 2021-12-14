@@ -16,7 +16,7 @@ export default function answerBar({curr}) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 60,
+    fontSize: 40,
     color: "black",
     margin: 25
   },
