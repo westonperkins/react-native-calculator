@@ -15,20 +15,17 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function buttons() {
   let numbers = [
-    1, 2, 3,
+    0, 9, 8,
 
-    4, 5, 6,
+    7, 6, 5,
 
-    7, 8, 9,
+    4, 3, 2,
 
-    0,
+    1,
   ];
   let operators = ["/", "*", "-", "+", "."];
   let changers = ["AC"];
 
-  const [number, setNumber] = useState("");
-  const [op, setop] = useState("");
-  const [change, setchange] = useState("");
   const [equation, setEquation] = useState("");
 
   const changeValue = (change) => {
@@ -40,7 +37,7 @@ export default function buttons() {
     ) {
       setEquation((equation * -1).toString());
     } else if (change == "%" && numbers.includes(Number(equation.slice(-1)))) {
-        setEquation((equation * 0.01).toString())
+      setEquation((equation * 0.01).toString());
     }
   };
 
@@ -54,10 +51,6 @@ export default function buttons() {
     setEquation(equation + num);
   };
 
-  const chooseOp = (op) => {
-    setop(op);
-  };
-
   const calculate = () => {
     setEquation(eval(equation).toString());
   };
@@ -65,17 +58,8 @@ export default function buttons() {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <AnswerBar curr={equation} />
+
       <View style={styles.buttonContainer}>
-        {numbers.map((number, key) => (
-          <TouchableOpacity style={styles.buttons} key={key}>
-            <Text
-              style={styles.buttonText}
-              onPress={() => chooseNum(number.toString())}
-            >
-              {number}
-            </Text>
-          </TouchableOpacity>
-        ))}
         {operators.map((operator, key) => (
           <TouchableOpacity style={styles.buttons} key={key}>
             <Text
@@ -83,6 +67,16 @@ export default function buttons() {
               onPress={() => chooseNum(operator.toString())}
             >
               {operator}
+            </Text>
+          </TouchableOpacity>
+        ))}
+        {numbers.map((number, key) => (
+          <TouchableOpacity style={styles.numbers} key={key}>
+            <Text
+              style={styles.buttonText}
+              onPress={() => chooseNum(number.toString())}
+            >
+              {number}
             </Text>
           </TouchableOpacity>
         ))}
@@ -111,16 +105,17 @@ const styles = StyleSheet.create({
     height: windowHeight,
   },
   buttonContainer: {
+    marginTop: 15,
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignContent: "center",
   },
-  buttons: {
+  numbers: {
     marginBottom: 10,
     margin: 5,
-    width: 80,
+    width: 100,
     height: 80,
     borderRadius: 80 / 2,
     borderWidth: 3,
@@ -130,8 +125,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "orange",
   },
+  buttons: {
+    marginBottom: 10,
+    margin: 5,
+    width: 100,
+    height: 65,
+    borderRadius: 80 / 2,
+    borderWidth: 3,
+    alignSelf: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "grey",
+  },
   buttonText: {
+    width: 100,
+    height: 80,
     fontSize: 45,
+    textAlign: "center",
+    alignSelf: "center",
+    marginTop: 26,
     color: "white",
     fontWeight: "400",
   },

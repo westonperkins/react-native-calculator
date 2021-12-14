@@ -16,14 +16,16 @@ export default function answerBar({curr}) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 40,
-    color: "white",
+    fontSize: 60,
+    color: "black",
     margin: 25
   },
   mainScreen: {
     width: windowWidth,
-    height: 250,
+    height: 180,
     borderWidth: 3,
+    backgroundColor: "#DFDFDF",
+    borderBottomColor: "white",
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "flex-end"
