@@ -23,50 +23,42 @@ export default function buttons() {
 
     0,
   ];
-  let operators = ["÷", "x", "-", "+", "="];
+  let operators = ["/", "*", "-", "+"];
   let changers = ["AC", "+/-", "%", "."];
 
-  const [state, setstate] = useState("");
+  const [number, setNumber] = useState("");
   const [op, setop] = useState("");
   const [change, setchange] = useState("");
+  const [equation, setEquation] = useState("");
 
-  const changeValue = (change) => {
-    if (change == "AC") {
-      setstate(0);
-    } else if (change == "+/-") {
-      setstate(state * -1);
-    } else if (change == "%") {
-      setstate(state * 0.01);
-    } else if (change == ".") {
-      setstate(state + ".");
-    }
-  };
+  const changeValue = (change) => {};
 
   const chooseNum = (num) => {
-    if (op != "") {
-      if (op == "+") {
-        setstate(num + state);
-      } else if (op == "-") {
-        console.log(state);
-        console.log(num);
-        setstate(state - num);
-      } else if (op == "÷") {
-        setstate(state / num);
-      } else if (op == "x") {
-        setstate(num * state);
-      }
-    } else {
-      setstate(parseInt(state + num));
+    // for(let i =0;i<operators.length; i++) {
+    //     if(equation[equation.length-1] == operators[i]) {
+    //         return
+    //     }
+    // }
+    if (
+      (operators.includes(num) && equation == "") ||
+      (operators.includes(num) && operators.includes(equation.slice(-1)))
+    ) {return
     }
+    setEquation(equation + num);
+    console.log(equation[equation.length - 1]);
   };
 
   const chooseOp = (op) => {
     setop(op);
   };
 
+  const calculate = () => {
+    setEquation(eval(equation));
+  };
+
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <AnswerBar curr={state} />
+      <AnswerBar curr={equation} />
       <View style={styles.buttonContainer}>
         {numbers.map((number, key) => (
           <TouchableOpacity style={styles.buttons} key={key}>
@@ -80,7 +72,10 @@ export default function buttons() {
         ))}
         {operators.map((operator, key) => (
           <TouchableOpacity style={styles.buttons} key={key}>
-            <Text style={styles.buttonText} onPress={() => chooseOp(operator)}>
+            <Text
+              style={styles.buttonText}
+              onPress={() => chooseNum(operator.toString())}
+            >
               {operator}
             </Text>
           </TouchableOpacity>
@@ -95,6 +90,11 @@ export default function buttons() {
             </Text>
           </TouchableOpacity>
         ))}
+        <TouchableOpacity style={styles.buttons}>
+          <Text style={styles.buttonText} onPress={calculate}>
+            =
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
